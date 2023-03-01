@@ -18,7 +18,7 @@
     "outDir": "dist",
     "baseUrl": ".",
     "paths": {
-        "@root/*": ["src/*"],
+        "@root/*": ["src/*"]
     }
   },
   "exclude": [
