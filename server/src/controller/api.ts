@@ -2,7 +2,6 @@ import { Inject, Controller, Post, Query } from '@midwayjs/core'
 import { Context } from 'egg'
 import { IGetUserResponse } from '../interface'
 import { UserService } from '../service/user'
-
 @Controller('/api')
 export class APIController {
     @Inject()
