@@ -11,6 +11,8 @@ export type DefaultConfig = PowerPartial<EggAppConfig>
  */
 export default {
     security: {
-        csrf: false,
+        csrf: {
+            enable: false,
+        },
     },
 } as MidwayConfig & DefaultConfig
