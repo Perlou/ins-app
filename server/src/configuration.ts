@@ -3,6 +3,7 @@ import { Application } from 'egg'
 import { join } from 'path'
 import * as egg from '@midwayjs/web'
 import * as swagger from '@midwayjs/swagger'
+// import * as sequelize from '@midwayjs/sequelize'
 
 @Configuration({
     imports: [
@@ -11,6 +12,7 @@ import * as swagger from '@midwayjs/swagger'
             component: swagger,
             enabledEnvironment: ['local'],
         },
+        // sequelize,
     ],
     importConfigs: [join(__dirname, './config')],
 })

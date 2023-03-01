@@ -7,9 +7,13 @@
     "@midwayjs/bootstrap": "^3.0.0",
     "@midwayjs/core": "^3.0.0",
     "@midwayjs/decorator": "^3.0.0",
+    "@midwayjs/sequelize": "3",
     "@midwayjs/swagger": "3",
     "@midwayjs/web": "^3.0.0",
     "egg": "^2.0.0",
+    "mysql2": "^3.1.2",
+    "sequelize": "^6.29.0",
+    "sequelize-typescript": "^2.1.5",
     "swagger-ui-dist": "^4.16.1"
   },
   "devDependencies": {
