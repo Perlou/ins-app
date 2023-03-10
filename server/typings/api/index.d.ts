@@ -1,9 +1,9 @@
 
-declare module API {
+declare module Api {
     interface UserRegisterOptions {
         username: string
         password: string
-        mobile?: number
+        mobile?: string
         email: string
         userId?: string
     }
