@@ -2,7 +2,7 @@ import { Config, Inject, Provide } from '@midwayjs/core'
 import { IUserModel } from '@root/model/user'
 import { v4 as uuidv4 } from 'uuid'
 
-// const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken')
 
 export type IUserService = UserService
 
@@ -28,7 +28,7 @@ export class UserService {
      * @memberof UserService
      */
     async getUserByUserId(userId: string) {
-        this.UserModel.findOne({ where: { userId } })
+        return this.UserModel.findOne({ where: { userId } })
     }
 
     /**
@@ -38,7 +38,7 @@ export class UserService {
      * @returns
      * @memberof UserService
      */
-    async register(options: Api.UserRegisterOptions) {
+    async register(options: API.UserRegisterOptions) {
         // 添加uuid
         options.userId = uuidv4().replace(/-/g, '')
 
@@ -74,8 +74,27 @@ export class UserService {
      * @returns
      * @memberof UserService
      */
-    async login(options: Api.UserLoginOptions) {
-        return this.jwtSecret
+    async login(options: API.UserLoginOptions) {
+        const existUser = await this.getUserByMail(options.email)
+
+        // 用户不存在
+        if (!existUser) {
+            return null
+        }
+
+        const passhash = existUser.password
+        // TODO: change to async compare
+        const equal = passhash === options.password
+        // 密码不匹配
+        if (!equal) {
+            return false
+        }
+
+        // 验证通过
+        const token = jwt.sign({ userId: existUser.userId }, this.jwtSecret, {
+            expiresIn: '7d',
+        })
+        return token
     }
 
     /**
@@ -86,7 +105,7 @@ export class UserService {
      * @memberof UserService
      */
     async getUserByMail(email: string) {
-        this.UserModel.findOne({ where: { email } })
+        return this.UserModel.findOne({ where: { email } })
     }
 
     /**

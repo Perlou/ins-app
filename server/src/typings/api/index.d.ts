@@ -1,5 +1,5 @@
 
-declare module Api {
+declare module API {
     interface UserRegisterOptions {
         username: string
         password: string
@@ -19,5 +19,3 @@ declare module Api {
         password?: string
     }
 }
-
-export as namespace API

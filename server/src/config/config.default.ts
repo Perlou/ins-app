@@ -1,5 +1,8 @@
 import { MidwayConfig, MidwayAppInfo } from '@midwayjs/core'
 
+// 引入数据源
+import { UserModel } from '@root/model/user'
+
 export default (appInfo: MidwayAppInfo) => {
     return {
         // use for cookie sign key, should change to your own and keep security
@@ -26,7 +29,7 @@ export default (appInfo: MidwayAppInfo) => {
                     dialect: 'mysql',
                     define: { charset: 'utf8' },
                     timezone: '+08:00',
-                    entities: [],
+                    entities: [UserModel],
                     // 本地的时候，可以通过 sync: true 直接 createTable
                     sync: appInfo.env === 'local',
                 },

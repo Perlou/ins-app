@@ -2,19 +2,11 @@ import { App, Configuration, ILifeCycle } from '@midwayjs/core'
 import { Application } from 'egg'
 import { join } from 'path'
 import * as egg from '@midwayjs/web'
-// import * as swagger from '@midwayjs/swagger'
 import * as sequelize from '@midwayjs/sequelize'
 import openApi, { document } from './decorator/openApi'
 
 @Configuration({
-    imports: [
-        egg,
-        // {
-        //     component: swagger,
-        //     enabledEnvironment: ['local'],
-        // },
-        sequelize,
-    ],
+    imports: [egg, sequelize],
     importConfigs: [join(__dirname, './config')],
 })
 export class ContainerLifeCycle implements ILifeCycle {

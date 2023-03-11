@@ -18,7 +18,7 @@ import { openApiKey } from './enum'
 import { ParamMap, ParamRule } from './paramGetter'
 import { config } from './config'
 import { regController } from './document'
-import symbolName from '../../../typings/api/apiSymbolName'
+import symbolName from '@root/typings/api/apiSymbolName'
 import { BadRequestError } from './error'
 
 const midway = {

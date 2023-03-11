@@ -10,7 +10,7 @@ let _config = {
     /**
      * 类型定义存放位置
      */
-    typingsPath: path.join(__dirname, '../../../typings/api'),
+    typingsPath: path.join(__dirname, '../../typings/api'),
     /**
      * 是否开记 swagger ui
      */

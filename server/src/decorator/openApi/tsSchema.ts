@@ -4,7 +4,7 @@ import { SchemaObject } from 'openapi3-ts'
 import * as path from 'path'
 import * as fs from 'fs'
 import { globSync } from 'glob'
-import symbolName from '../../../typings/api/apiSymbolName'
+import symbolName from '@root/typings/api/apiSymbolName'
 
 const compilerOptions: TJS.CompilerOptions = {
     strictNullChecks: false,

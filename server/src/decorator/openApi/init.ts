@@ -33,7 +33,7 @@ const baseType = `/**
  * @default 默认值
  *
  */
-declare module API {
+declare module Api {
     interface ErrorRes {
         message: string
     }

@@ -1,31 +1,11 @@
-import { Body, Config, Controller, Inject, Post, Provide } from '@midwayjs/core'
+import { Provide, Inject, Config } from '@midwayjs/core'
 import { Context } from 'egg'
 import { urlNamespace } from '@root/config/data'
 import { IUserService } from '@root/service/user'
-import { ApiProperty } from '@midwayjs/swagger'
+import { controller, post, Bodys } from '@root/decorator/openApi'
 
-class UserRegisterOptions {
-    @ApiProperty({ example: '', description: '手机号' })
-    mobile: string
-
-    @ApiProperty({ example: '', description: 'The name of the Catage' })
-    password: string
-
-    @ApiProperty({ example: '', description: 'The name of the Catbreed' })
-    username: string
-
-    @ApiProperty({ example: '', description: 'The name of the Catbreed' })
-    email: string
-}
-
-/**
- * 管理登录状态
- *
- * @export
- * @class LoginController
- */
 @Provide()
-@Controller(urlNamespace + '/login')
+@controller(urlNamespace + '/login')
 export class LoginController {
     @Inject()
     userService: IUserService
@@ -36,15 +16,15 @@ export class LoginController {
     @Config('auth_cookie_name')
     auth_cookie_name
 
-    /**
-     * 注册
-     *
-     * @param {Context} ctx
-     * @memberof LoginController
-     */
-    @Post('/register')
-    async register(@Body() options: UserRegisterOptions) {
-        const { mobile, password, username, email } = options
+    @post('/register', {
+        description: '注册',
+        responses: 'string',
+    })
+    async register(
+        @Bodys('API.UserRegisterOptions')
+        input: API.UserRegisterOptions
+    ) {
+        const { mobile, password, username, email } = input
 
         // 错误处理
         const message = this.__errNotice({ mobile, password, username, email })
@@ -59,6 +39,42 @@ export class LoginController {
             mobile,
             password,
         })
+    }
+
+    @post('/', {
+        description: '登录',
+    })
+    async login(
+        @Bodys('API.UserLoginOptions')
+        input: API.UserLoginOptions
+    ) {
+        const { password, email } = input
+
+        // 登录
+        const token = await this.userService.login({ password, email })
+
+        // set cookie
+        if (token) {
+            // id存入Cookie, 用于验证过期.
+            const opts = {
+                path: '/',
+                maxAge: 1000 * 60 * 60 * 24 * 30,
+                // maxAge: 1000 * 40,
+                // signed: true,
+                httpOnly: false,
+                domain: '127.0.0.1',
+            }
+            this.ctx.cookies.set(this.auth_cookie_name, token, opts) // cookie 有效期30天
+            this.ctx.body = {
+                status: 200,
+                message: '登录成功',
+                data: {
+                    flag: true,
+                },
+            }
+        } else {
+            this.ctx.throw(400, '用户名或密码错误')
+        }
     }
 
     /**

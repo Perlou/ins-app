@@ -7,7 +7,7 @@
 import { attachClassMetadata, getClassMetadata } from '@midwayjs/core'
 import { Context } from 'egg'
 import { openApiKey } from './enum'
-import symbolName from '../../../typings/api/apiSymbolName'
+import symbolName from '@root/typings/api/apiSymbolName'
 import * as Ajv from 'ajv'
 import { getSchemaObject } from './tsSchema'
 import { SchemaObject } from 'openapi3-ts'
